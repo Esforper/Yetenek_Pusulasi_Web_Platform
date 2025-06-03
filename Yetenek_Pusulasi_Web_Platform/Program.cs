@@ -16,6 +16,12 @@ namespace Yetenek_Pusulasi_Web_Platform
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+            // Senaryo ile ilgili servisleri ve repository'leri ekleyelim
+            builder.Services.AddScoped<IScenarioFactory, ConcreteScenarioFactory>();
+            builder.Services.AddSingleton<IScenarioRepository, InMemoryScenarioRepository>(); // Singleton basit örnek için, scoped daha uygun olabilir
+            builder.Services.AddScoped<ScenarioService>();
+
+
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
